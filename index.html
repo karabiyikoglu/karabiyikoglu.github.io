@@ -1,1 +1,116 @@
-Hello World
+<!DOCTYPE html>
+<head></head>
+<script language="javascript" type="text/javascript">
+  var myDivArea;
+  var angle = 0;
+  let wave = [];
+  function init(){
+    myDivArea = document.getElementById("myDiv");
+    writeToScreen("Math.PI : "+Math.PI);
+    writeToScreen("Math.E : "+Math.E);
+    //Angle in radians = Angle in degrees x PI / 180.
+    
+    var angleInRadian = angle * Math.PI / 180;
+    var sin = Math.sin(angleInRadian);
+    writeToScreen("Math.sin(" + angle+ ") : " + sin);
+    //writeToScreen("Math.cos(" + angle+ ") : " + Math.cos(angleInRadian));
+    //writeToScreen("Math.tan(" + angle+ ") : " + Math.tan(angleInRadian));
+
+    canv = document.getElementById("gc");
+    ctx = canv.getContext("2d");
+
+  }
+  function loopG() {
+    angle = angle + 1;
+    let angleInRadian = angle * Math.PI / 180;
+    var sin = Math.sin(angleInRadian);
+    writeToScreen("Math.sin(" + angle+ ") : " + sin);
+    
+    ctx.fillStyle="black";
+    ctx.fillRect(0,0,canv.width,canv.height);
+    ctx.translate(0,0);
+    ctx.translate(150, 200);
+
+    let x = 0;
+    let y = 0;
+    let slider = 1;
+    for(let i = 0; i < slider; i++){
+      let prevx = x;
+      let prevy = y;
+      
+      let n = i * 2 + 1;
+      let radius = 60 * (4 / (n * Math.PI));
+      x += radius * Math.cos(n * angleInRadian);
+      y += radius * Math.sin(n * angleInRadian);
+    
+      ellipse(prevx,prevy, radius);
+
+      writeToScreen("radius , angleInRadian, x, y : "+radius+":::::"+angleInRadian+" *** "+x+" ---- "+y);
+
+      drawLine(prevx,prevy,x,y);
+
+    }
+    
+    
+    //ellipse(75,75,50)
+
+    //var toX = sin * 50 + 75;
+    //var toY = Math.cos(angleInRadian) * 50 + 75;
+    //drawLine(75,75,toX,toY);
+    wave.unshift(y);
+    ctx.translate(200,0);
+    drawLine(x-200,y,0,wave[0]);
+
+    //drawLine(toX,toY,150,wave[0]);
+    ctx.lineWidth = 5;
+    for(let i=0;i < wave.length;i++){
+      drawLine(i,wave[i],i+1,wave[i]);
+    }
+    ctx.lineWidth = 1;
+    ctx.translate(-200,0);
+    ctx.translate(-150, -200);
+
+    if(wave.length > 350){
+      wave.pop();
+    }
+    if(angle == 360){
+      angle = 0;
+    }
+  }
+
+  function ellipse(origX,origY,radius){
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.arc(origX, origY, radius, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
+
+  function drawLine(fromX,fromY,toX,toY){
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
+  }
+
+  function writeToScreen(message)
+  {
+    //var pre = document.createElement("p");
+    //pre.style.wordWrap = "break-word";
+    //pre.innerHTML = message;
+    //myDivArea.appendChild(pre);
+    myDivArea.innerHTML = message;
+  }
+  window.onload = function(){
+    init();
+    setInterval(loopG,10/3);
+  }
+</script>
+<body>
+  <div id="myDiv">
+
+  </div>
+
+<canvas id="gc" width="700" height="400"></canvas>
+</body>
+</html>
