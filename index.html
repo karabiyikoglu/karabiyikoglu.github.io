@@ -10,6 +10,9 @@
   var speedSlider;
   var speedValueDiv;
 
+  var circleRadiusSlider;
+  var circleRadiusSliderDiv;
+
   function init(){
     myDivArea = document.getElementById("myDiv");
     nValueSlider = document.getElementById("nValueSlider");
@@ -29,6 +32,16 @@
     speedSlider.oninput = function(){
       speedValueDiv.innerHTML = "Speed : "+speedSlider.value;
     }
+
+    circleRadiusSlider = document.getElementById("circleRadiusSlider");
+    circleRadiusSliderDiv = document.getElementById("circleRadiusSliderDiv");
+
+    circleRadiusSliderDiv.innerHTML = "Circle Radius : " + circleRadiusSlider.value;
+
+    circleRadiusSlider.oninput = function(){
+      circleRadiusSliderDiv.innerHTML = "Circle Radius : " + circleRadiusSlider.value;
+    }
+
 
     writeToScreen("Math.PI : "+Math.PI);
     writeToScreen("Math.E : "+Math.E);
@@ -64,7 +77,7 @@
       let prevy = y;
       
       let n = i * 2 + 1;
-      let radius = 60 * (4 / (n * Math.PI));
+      let radius = circleRadiusSlider.value * (4 / (n * Math.PI));
       x += radius * Math.cos(n * angleInRadian);
       y += radius * Math.sin(n * angleInRadian);
     
@@ -150,6 +163,9 @@
 
 <input type="range" name="mySpeedRange" id="speedSlider" min="1" max="100" value="1" style="width: 700px;">
 <div id="speedValueDiv"></div>
+
+<input type="range" name="myRadius" id="circleRadiusSlider" min="10" max="100" value="60" style="width: 700px;">
+<div id="circleRadiusSliderDiv"></div>
 
 </body>
 </html>
