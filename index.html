@@ -6,6 +6,10 @@
   let wave = [];
   var nValueSlider;
   var nValueDiv;
+
+  var speedSlider;
+  var speedValueDiv;
+
   function init(){
     myDivArea = document.getElementById("myDiv");
     nValueSlider = document.getElementById("nValueSlider");
@@ -15,6 +19,15 @@
 
     nValueSlider.oninput = function(){
       nValueDiv.innerHTML = "n value : "+nValueSlider.value;
+    }
+
+    speedSlider = document.getElementById("speedSlider");
+    speedValueDiv = document.getElementById("speedValueDiv");
+
+    speedValueDiv.innerHTML = "Speed : "+speedSlider.value;
+
+    speedSlider.oninput = function(){
+      speedValueDiv.innerHTML = "Speed : "+speedSlider.value;
     }
 
     writeToScreen("Math.PI : "+Math.PI);
@@ -115,7 +128,14 @@
   }
   window.onload = function(){
     init();
-    setInterval(loopG,10/3);
+    //setInterval(loopG,10/3);
+    let timeout = 103 - speedSlider.value;
+    let timerId = setTimeout(function loopD(){
+      loopG();
+      timeout = 103 - speedSlider.value;
+      timerId = setTimeout(loopD,timeout);
+    }, timeout);
+
   }
 </script>
 <body>
@@ -125,7 +145,11 @@
 
 <canvas id="gc" width="700" height="400"></canvas>
 <br>
-<input type="range" name="myRange" id="nValueSlider" min="1" max="100" value="1" style="width: 700px;">
+<input type="range" name="myNRange" id="nValueSlider" min="1" max="100" value="1" style="width: 700px;">
 <div id="nValueDiv"></div>
+
+<input type="range" name="mySpeedRange" id="speedSlider" min="1" max="100" value="1" style="width: 700px;">
+<div id="speedValueDiv"></div>
+
 </body>
 </html>
