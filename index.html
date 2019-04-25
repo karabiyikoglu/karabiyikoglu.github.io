@@ -4,8 +4,19 @@
   var myDivArea;
   var angle = 0;
   let wave = [];
+  var nValueSlider;
+  var nValueDiv;
   function init(){
     myDivArea = document.getElementById("myDiv");
+    nValueSlider = document.getElementById("nValueSlider");
+    nValueDiv = document.getElementById("nValueDiv");
+    
+    nValueDiv.innerHTML = "n value : "+nValueSlider.value;
+
+    nValueSlider.oninput = function(){
+      nValueDiv.innerHTML = "n value : "+nValueSlider.value;
+    }
+
     writeToScreen("Math.PI : "+Math.PI);
     writeToScreen("Math.E : "+Math.E);
     //Angle in radians = Angle in degrees x PI / 180.
@@ -20,6 +31,7 @@
     ctx = canv.getContext("2d");
 
   }
+
   function loopG() {
     angle = angle + 1;
     let angleInRadian = angle * Math.PI / 180;
@@ -33,7 +45,7 @@
 
     let x = 0;
     let y = 0;
-    let slider = 1;
+    let slider = nValueSlider.value;
     for(let i = 0; i < slider; i++){
       let prevx = x;
       let prevy = y;
@@ -112,5 +124,8 @@
   </div>
 
 <canvas id="gc" width="700" height="400"></canvas>
+<br>
+<input type="range" name="myRange" id="nValueSlider" min="1" max="100" value="1" style="width: 700px;">
+<div id="nValueDiv"></div>
 </body>
 </html>
