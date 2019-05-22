@@ -1,229 +1,48 @@
 <!DOCTYPE html>
-<head>
- <style>
-   p {
-      white-space: pre-wrap;
-   }
- </style>
-
-</head>
-<script language="javascript" type="text/javascript">
-  var myDivArea;
-  var angle = 0;
-  let wave = [];
-  let wavex = [];
-  var nValueSlider;
-  var nValueDiv;
-
-  var speedSlider;
-  var speedValueDiv;
-
-  var circleRadiusSlider;
-  var circleRadiusSliderDiv;
-
-  var rdFunctionS;
-
-  function init(){
-    myDivArea = document.getElementById("myDiv");
-    nValueSlider = document.getElementById("nValueSlider");
-    nValueDiv = document.getElementById("nValueDiv");
+<html>
     
-    nValueDiv.innerHTML = "n value : "+nValueSlider.value;
-
-    nValueSlider.oninput = function(){
-      nValueDiv.innerHTML = "n value : "+nValueSlider.value;
-    }
-
-    speedSlider = document.getElementById("speedSlider");
-    speedValueDiv = document.getElementById("speedValueDiv");
-
-    speedValueDiv.innerHTML = "Speed : "+speedSlider.value;
-
-    speedSlider.oninput = function(){
-      speedValueDiv.innerHTML = "Speed : "+speedSlider.value;
-    }
-
-    circleRadiusSlider = document.getElementById("circleRadiusSlider");
-    circleRadiusSliderDiv = document.getElementById("circleRadiusSliderDiv");
-
-    circleRadiusSliderDiv.innerHTML = "Circle Radius : " + circleRadiusSlider.value;
-
-    circleRadiusSlider.oninput = function(){
-      circleRadiusSliderDiv.innerHTML = "Circle Radius : " + circleRadiusSlider.value;
-    }
-
-    rdFunctionS = document.getElementsByName("functionS");
-
-    writeToScreen("Math.PI : "+Math.PI);
-    writeToScreen("Math.E : "+Math.E);
-    //Angle in radians = Angle in degrees x PI / 180.
+    <head>
+        <style>
+            
+            h1 {
+                font-family: "Arial", sans-serif;
+            }
+            
+            p {
+                font-family: "Arial", sans-serif;
+            }
+            
+            div {
+                background-color: #ACCACC; 
+                width: 400px;
+                border: 15px solid #53678B;
+                padding: 15px;
+                margin: 20px;
+            }
+        </style>
+    </head>
     
-    var angleInRadian = angle * Math.PI / 180;
-    var sin = Math.sin(angleInRadian);
-    writeToScreen("Math.sin(" + angle+ ") : " + sin);
-    //writeToScreen("Math.cos(" + angle+ ") : " + Math.cos(angleInRadian));
-    //writeToScreen("Math.tan(" + angle+ ") : " + Math.tan(angleInRadian));
+    <body> 
 
-    canv = document.getElementById("gc");
-    ctx = canv.getContext("2d");
+       <center>
+        
+        <div>
+            <h1> İsmail Karabıyıkoğlu</h1>
+            <p> 
+                Software Engineer at Yapı ve Kredi Bankası. <br><br>
+                
+                <a href="mailto:karabiyikoglu@gmail.com">Email</a> <br>
+                
+                <a href="https://github.com/karabiyikoglu">Github</a> <br>
+                
+                <a href="https://www.linkedin.com/in/ismail-karab%C4%B1y%C4%B1ko%C4%9Flu-23075250/">LinkedIn</a>  <br>
 
-  }
+            </p>
+                
+            
+        </div>
+        
+         </center>
 
-  function loopG() {
-    angle = angle + 1;
-    let angleInRadian = angle * Math.PI / 180;
-    var sin = Math.sin(angleInRadian);
-    writeToScreen("Math.sin(" + angle+ ") : " + sin);
-    
-    ctx.fillStyle="black";
-    ctx.fillRect(0,0,canv.width,canv.height);
-    ctx.translate(0,0);
-    ctx.translate(150, 200);
-
-    let x = 0;
-    let y = 0;
-    let slider = nValueSlider.value;
-    let n = 0;
-    let radius = 0;
-    let functionVal = getFunctionS(rdFunctionS);
-    for(let i = 0; i < slider; i++){
-      let prevx = x;
-      let prevy = y;
-      
-      if(functionVal == 1){
-        n = i * 2 + 1;
-        radius = circleRadiusSlider.value * (4 / (n * Math.PI));
-      }else if(functionVal == 2){
-        n = i + 1;
-        radius = circleRadiusSlider.value * ( (2 * Math.pow(-1,(n - 1))) / (n * Math.PI));
-      }else if(functionVal == 3){
-        n = i * 2 + 1;
-        radius = circleRadiusSlider.value * ((8 / Math.pow(Math.PI,2)) * ((Math.pow(-1, ((n-1) / 2)) / (Math.pow(n,2)) )));
-      }else if(functionVal == 4){
-        n = i + 1;
-        radius = circleRadiusSlider.value * (Math.pow(-1,(n -1)) * (1 / Math.pow(2,n)) );
-      } 
-      
-      
-      //n = i + 1;
-      //radius = circleRadiusSlider.value * ( (2 * Math.pow(-1,(n - 1))) / (n * Math.PI));
-      
-      //n = i * 2 + 1;
-      //radius = circleRadiusSlider.value * ((8 / Math.pow(Math.PI,2)) * ((Math.pow(-1, ((n-1) / 2)) / (Math.pow(n,2)) )));
-      
-      //n = i + 1;
-      //radius = circleRadiusSlider.value * (Math.pow(-1,(n -1)) * (1 / Math.pow(2,n)) );
-
-      x += radius * Math.cos(n * angleInRadian);
-      y += radius * Math.sin(n * angleInRadian);
-    
-      writeToScreen("radius , angleInRadian, x, y : "+radius+":::::"+angleInRadian+" *** "+x+" ---- "+y);
-
-      ellipse(prevx,prevy, Math.abs(radius));
-
-      drawLine(prevx,prevy,x,y);
-
-    }
-    
-    
-    //ellipse(75,75,50)
-
-    //var toX = sin * 50 + 75;
-    //var toY = Math.cos(angleInRadian) * 50 + 75;
-    //drawLine(75,75,toX,toY);
-    wave.unshift(y);
-    wavex.unshift(x);
-
-    ctx.translate(200,0);
-    drawLine(x-200,y,0,wave[0]);
-
-    //drawLine(toX,toY,150,wave[0]);
-    ctx.lineWidth = 5;
-    for(let i=0;i < wave.length -1;i++){
-      drawLine(i,wave[i],i+1,wave[i]);
-      //drawLine(wavex[i],wave[i],wavex[i+1],wave[i+1]);
-    }
-    ctx.lineWidth = 1;
-    ctx.translate(-200,0);
-    ctx.translate(-150, -200);
-
-    if(wave.length > 350){
-      wave.pop();
-      wavex.pop();
-    }
-    if(angle == 360){
-      angle = 0;
-    }
-  }
-
-  function ellipse(origX,origY,radius){
-    ctx.beginPath();
-    ctx.strokeStyle = "red";
-    ctx.arc(origX, origY, radius, 0, 2 * Math.PI);
-    ctx.stroke();
-  }
-
-  function getFunctionS(radios){
-    for(var i = 0;i<radios.length;i++){
-      if(radios[i].checked){
-        return radios[i].value;
-      }
-    }
-  }
-
-  function drawLine(fromX,fromY,toX,toY){
-    ctx.beginPath();
-    ctx.strokeStyle = "green";
-    ctx.moveTo(fromX, fromY);
-    ctx.lineTo(toX, toY);
-    ctx.stroke();
-  }
-
-  function writeToScreen(message)
-  {
-    //var pre = document.createElement("p");
-    //pre.style.wordWrap = "break-word";
-    //pre.innerHTML = message;
-    //myDivArea.appendChild(pre);
-    myDivArea.innerHTML = message;
-  }
-  window.onload = function(){
-    init();
-    //setInterval(loopG,10/3);
-    let timeout = 103 - speedSlider.value;
-    let timerId = setTimeout(function loopD(){
-      loopG();
-      timeout = 103 - speedSlider.value;
-      timerId = setTimeout(loopD,timeout);
-    }, timeout);
-
-  }
-</script>
-<body>
-  <div id="myDiv">
-
-  </div>
-
-<canvas id="gc" width="700" height="400"></canvas>
-<input type="radio" name="functionS" value="1" checked>Sinus 1
-<input type="radio" name="functionS" value="2">Sinus 2
-<input type="radio" name="functionS" value="3">Sinus 3
-<input type="radio" name="functionS" value="4">Sinus 4
-<br>
-<input type="range" name="myNRange" id="nValueSlider" min="1" max="100" value="1" style="width: 700px;">
-<div id="nValueDiv"></div>
-
-<input type="range" name="mySpeedRange" id="speedSlider" min="1" max="100" value="80" style="width: 700px;">
-<div id="speedValueDiv"></div>
-
-<input type="range" name="myRadius" id="circleRadiusSlider" min="10" max="100" value="60" style="width: 700px;">
-<div id="circleRadiusSliderDiv"></div>
-<p> 
-H
-e
-l
-l
-o
- </p>
-</body>
+    </body>
 </html>
